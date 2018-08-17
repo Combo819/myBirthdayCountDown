@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0"/>
+    <title>星海倒计时</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: black;
+            position: relative;
+            overflow: hidden;
+            padding-top: 100px;
+        }
+
+        body>span {
+            width: 35px;
+            height: 35px;
+            position: absolute;
+            animation: flash 1s alternate infinite;
+            /* border: 1px solid white; */
+            z-index: -1;
+        }
+
+        @keyframes flash {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .box {
+            width: 300px;
+            height: 200px;
+            border: 1px solid #000;
+            margin: 0 auto;
+        }
+
+        .sp1 {
+            width: 200px;
+            font-size: 18px;
+            display: block;
+            color: darkslategray;
+            font-weight: bolder;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        #sp {
+            width: 300px;
+            height: 50px;
+            font-size: 18px;
+            background-color: #efefef;
+            display: block;
+            color: rgb(231, 147, 50);
+            font-weight: bolder;
+            margin: 0 auto;
+            text-align: center;
+            line-height: 50px;
+        }
+        #head{
+            width: 106px;
+            height: 116px;
+            margin: 0 auto; 
+        }
+        #head>img{
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="head">
+        <img src="images/2.jpg" />
+    </div>
+    <div class="box">
+        <span class="sp1">距离你的生日还有：</span>
+        <span id="sp"></span>
+    </div>
+    <span>
+        <img src="images/1.png" />
+    </span>
+
+
+    <script>
+        window.onload = function () {
+            //屏幕宽高
+            var screenW = document.documentElement.clientWidth;
+            var screenH = document.documentElement.clientHeight;
+            var body = document.getElementsByTagName('body')[0];
+
+            for (var i = 0; i < 150; i++) {
+                var span = document.createElement('span');
+                span.innerHTML = '<img src="images/1.png" />';
+                body.appendChild(span);
+
+                var x = parseInt(Math.random() * screenW);
+                var y = parseInt(Math.random() * screenH);
+
+                span.style.left = x + "px";
+                span.style.top = y + "px";
+
+
+                span.style.animationDelay = Math.random() + "s";
+
+                var scale = Math.random() + 0.2;
+                //注意下面代表css的scale要变成字符串，不然js会把这当成js函数之类的
+                span.style.transform = 'scale(' + scale + ', ' + scale + ')';
+            }
+
+            setInterval(function () {
+                var date = new Date();
+                var currentTime = date.getTime();
+                var nextDate = new Date('2018/08/19 0:0:0');
+                nextTime = nextDate.getTime();
+
+                var allTime = nextTime - currentTime;
+
+                // 7. 把毫秒转成秒
+                var allSecond = parseInt(allTime / 1000);
+
+                // 8.转化
+                var d = size(parseInt(allSecond / 3600 / 24));
+                var h = size(parseInt(allSecond / 3600 % 24));
+                var m = size(parseInt(allSecond / 60 % 60));
+                var s = size(parseInt(allSecond % 60));
+
+                var span = document.getElementById('sp');
+                span.innerText = d + '天' + h + '小时' + m + '分钟' + s + '秒';
+            }, 1000)
+
+            function size(num) {
+                return num >= 10 ? num : '0' + num;
+            }
+
+        }
+    </script>
+</body>
+
+</html>
